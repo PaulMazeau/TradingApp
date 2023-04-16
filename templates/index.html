@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>TradingBot</title>
+</head>
+<body>
+<h1>Bienvenue sur Plan foireux de Theo partie 2</h1>
+
+<h3>La strat</h3>
+<form action="{{ url_for('result') }}" method="post">
+    <p>What's the stock 1</p>
+        <input type="text" name="ticket1" placeholder="AAPL" required="required"/><br> 
+    <p>What's the stock 2</p>
+        <input type="text" name="ticket2" placeholder="MSFT" required="required"/><br> 
+    <p>What's the interval</p>
+        <input type="text" name="interval" placeholder="1min" required="required"/><br> 
+    <p>What's the repetition number </p>
+        <input type="number" name="size" placeholder="5000" required="required"/><br> 
+    <button type="submit" class="boutton">Générer le résultat</button>
+</form>
+
+<h3>Pour Backtest 2 actifs</h3>
+<form action="{{ url_for('backtest_route') }}" method="post">
+    <p>What's the stock 1</p>
+        <input type="text" name="bckticket1" placeholder="AAPL" required="required"/><br> 
+    <p>What's the stock 2</p>
+        <input type="text" name="bckticket2" placeholder="MSFT" required="required"/><br> 
+    <p>What's the interval</p>
+        <input type="text" name="bckinterval" placeholder="1min" required="required"/><br> 
+    <p>What's the repetition number </p>
+        <input type="number" name="bcksize" placeholder="5000" required="required"/><br> 
+    <button type="submit" class="boutton">Générer le backtest</button>
+</form>
+</body>
+</html>
