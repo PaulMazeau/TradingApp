@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>BackTest</title>
+</head>
+<body>
+    <!-- NavBar -->
+    <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <a href="{{ url_for('index') }}" class="text-white text-xl font-bold">TradingBot</a>
+              </div>
+              <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                  <a href="{{ url_for('dashboard') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                  <a href="{{ url_for('bot') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stratégie</a>
+                  <a href="{{ url_for('set_backtest') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Backtest</a>
+                  <a href="{{ url_for('profil') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon profil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <h3 class="m-4 text-3xl font-medium leading-none tracking-tight text-gray-900 dark:text-white">La stratégie</h3>
+      <form action="{{ url_for('result') }}" method="post" class="p-6">
+          <div class="mb-4">
+            <label for="ticket1" class="block mb-2 font-bold text-gray-700">What's the stock 1</label>
+            <input type="text" name="ticket1" id="ticket1" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="AAPL" required="required">
+          </div>
+          <div class="mb-4">
+            <label for="ticket2" class="block mb-2 font-bold text-gray-700">What's the stock 2</label>
+            <input type="text" name="ticket2" id="ticket2" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="MSFT" required="required">
+          </div>
+          <div class="mb-4">
+            <label for="interval" class="block mb-2 font-bold text-gray-700">What's the interval</label>
+            <input type="text" name="interval" id="interval" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="1min" required="required">
+          </div>
+          <div class="mb-4">
+            <label for="size" class="block mb-2 font-bold text-gray-700">What's the repetition number</label>
+            <input type="number" name="size" id="size" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="5000" required="required">
+          </div>
+          <div class="mt-8">
+            <button type="submit" class="px-4 py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 text-gray-700">Générer la stratégie</button>
+          </div>
+        </form>
+    
+</body>
+</html>

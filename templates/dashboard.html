@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Closed Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <!-- NavBar -->
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <a href="{{ url_for('index') }}" class="text-white text-xl font-bold">TradingBot</a>
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4">
+                <a href="{{ url_for('dashboard') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                <a href="{{ url_for('bot') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stratégie</a>
+                <a href="{{ url_for('set_backtest') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Backtest</a>
+                <a href="{{ url_for('profil') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon profil</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+<div class="mx-64 mt-12">
+  <!-- portfolio.html -->
+
+<!-- Header -->
+<h1 class="text-2xl font-bold mb-4">Portfolio actuel</h1>
+
+<!-- Table -->
+<table class="table-auto w-full mb-12">
+  <thead>
+    <tr>
+      <th class="py-3 px-6 text-left">#</th>
+      <th class="py-3 px-6 text-left">Symbol</th>
+      <th class="py-3 px-6 text-left">Qty</th>
+      <th class="py-3 px-6 text-left">Market Value</th>
+      <th class="py-3 px-6 text-left">Avg Entry Price</th>
+      <th class="py-3 px-6 text-left">Unrealized P/L</th>
+      <th class="py-3 px-6 text-left">Unrealized P/L %</th>
+      <th class="py-3 px-6 text-left">Current Price</th>
+      <th class="py-3 px-6 text-left">Lastday Price</th>
+      <th class="py-3 px-6 text-left">Change Today</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for position in positions %}
+      <tr >
+        <td class="border px-4 py-2">{{ loop.index }}</td>
+        <td class="border px-4 py-2">{{ position.symbol }}</td>
+        <td class="border px-4 py-2">{{ position.qty }}</td>
+        <td class="border px-4 py-2">{{ position.market_value }}</td>
+        <td class="border px-4 py-2">{{ position.average_entry_price }}</td>
+        <td class="border px-4 py-2">{{ position.unrealized_pl }}</td>
+        <td class="border px-4 py-2">{{ position.unrealized_plpc }}</td>
+        <td class="border px-4 py-2">{{ position.current_price }}</td>
+        <td class="border px-4 py-2">{{ position.lastday_price }}</td>
+        <td class="border px-4 py-2">{{ position.change_today }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  {% block content %}
+    <h1 class="text-2xl font-bold mb-4">Liste des ordes passés</h1>
+
+    <div class="bg-white shadow-md rounded my-6">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">Symbol</th>
+            <th class="py-3 px-6 text-left">Quantity</th>
+            <th class="py-3 px-6 text-left">Side</th>
+            <th class="py-3 px-6 text-left">Avg. Price</th>
+            <th class="py-3 px-6 text-left">Filled Qty</th>
+            <th class="py-3 px-6 text-left">Status</th>
+            <th class="py-3 px-6 text-left">Created At</th>
+            <th class="py-3 px-6 text-left">Filled At</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-sm font-light">
+          {% for order in orders %}
+          <tr class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-6 text-left">{{ order.symbol }}</td>
+            <td class="py-3 px-6 text-left">{{ order.qty }}</td>
+            <td class="py-3 px-6 text-left">{{ order.side }}</td>
+            <td class="py-3 px-6 text-left">{{ order.filled_avg_price }}</td>
+            <td class="py-3 px-6 text-left">{{ order.filled_qty }}</td>
+            <td class="py-3 px-6 text-left">{{ order.status }}</td>
+            <td class="py-3 px-6 text-left">{{ order.created_at }}</td>
+            <td class="py-3 px-6 text-left">{{ order.filled_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endblock %}
+</div>
+  </body>
+</html>

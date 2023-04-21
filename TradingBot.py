@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request
 from bot import test_cointeg
 from backtest import backtest
-import matplotlib 
+import matplotlib
+from broker import get_closed_orders, api
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt 
 import numpy as np
+import alpaca_trade_api as tradeapi
 
 app = Flask(__name__)
 
@@ -14,6 +16,20 @@ def index():
 
     # If method not post so display HTML template
     return render_template('index.html')
+
+@app.route('/profil', methods=['GET', 'POST'])
+def profil():
+    
+    # If method not post so display HTML template
+    return render_template('profil.html')
+
+@app.route('/backtest', methods=['GET', 'POST'])
+def set_backtest():
+    return render_template('backtest.html')
+
+@app.route('/bot', methods=['GET', 'POST'])
+def bot():
+    return render_template('bot.html')
 
 @app.route('/result', methods=['POST'])
 def result():
@@ -43,8 +59,9 @@ def result():
     return render_template('result.html', data=df.to_html(), coint=coint, moy=moy)
 
 
-@app.route('/backtest_route', methods=['POST'])
-def backtest_route():
+
+@app.route('/display_backtest_result', methods=['POST'])
+def display_backtest_result():
     bckticket1 = request.form['bckticket1']
     bckticket2 = request.form['bckticket2']
     bckinterval = request.form['bckinterval']
@@ -61,4 +78,32 @@ def backtest_route():
     print(f"bt = {bt}")
     print(f"benefmax = {benefmax}")
     
-    return render_template('backtest.html', bnf=bnf, et=et, bt=bt, benefmax=benefmax)
+    return render_template('display_backtest_result.html', bnf=bnf, et=et, bt=bt, benefmax=benefmax)
+
+
+
+# Define route to display the closed orders
+@app.route('/dashboard')
+def dashboard():
+    orders_data = get_closed_orders(api)
+
+    # Get the portfolio
+    portfolio = api.list_positions()
+
+    # Extract the relevant information from each position
+    positions_data = []
+    for position in portfolio:
+        data = {
+            'symbol': position.symbol,
+            'qty': position.qty,
+            'market_value': position.market_value,
+            'average_entry_price': position.avg_entry_price,
+            'unrealized_pl': position.unrealized_pl,
+            'unrealized_plpc': position.unrealized_plpc,
+            'current_price': position.current_price,
+            'lastday_price': position.lastday_price,
+            'change_today': position.change_today,
+        }
+        positions_data.append(data)
+    # Render the HTML template with the orders data
+    return render_template('dashboard.html', orders=orders_data,positions=positions_data)
