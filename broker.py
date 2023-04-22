@@ -1,6 +1,6 @@
 import alpaca_trade_api as tradeapi
 
-api = tradeapi.REST('', '', 'https://paper-api.alpaca.markets')
+api = tradeapi.REST('PKMPY03941SVWYJA1MHF', 'h1v7bSV7p5HSaRruYRJFZSUBJ8IQg3rgweqbNmQC', 'https://paper-api.alpaca.markets')
 
 def get_closed_orders(api):
     # Get the last 100 closed orders

@@ -7,6 +7,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt 
 import numpy as np
 import alpaca_trade_api as tradeapi
+import plotly.graph_objs as go
+import plotly.express as px
 
 app = Flask(__name__)
 
@@ -105,5 +107,37 @@ def dashboard():
             'change_today': position.change_today,
         }
         positions_data.append(data)
+
+
+    # Créer un dictionnaire pour compter le nombre de positions pour chaque symbole
+    symbols_counts = {}
+    for position in portfolio:
+        symbol = position.symbol
+        if symbol in symbols_counts:
+            symbols_counts[symbol] += 1
+        else:
+            symbols_counts[symbol] = 1
+
+    # Créer une liste de labels et de valeurs pour le graphique camembert du portfolio
+    labels_portfolio = list(symbols_counts.keys())
+    values_portfolio = list(symbols_counts.values())
+
+    # Créer le graphique camembert du portfolio avec Plotly
+    fig_portfolio = go.Figure(data=[go.Pie(labels=labels_portfolio, values=values_portfolio)])
+
+    # Configurer le layout du graphique du portfolio
+    fig_portfolio.update_layout(
+        title='Répartition du portfolio par symbole',
+        margin=dict(l=20, r=20, t=50, b=20),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(size=12)
+    )
+    fig_portfolio.update_traces(marker=dict(colors=['#7354F3', '#B1496A', '#0000FF']))
+
+
+    # Convertir le graphique du portfolio en HTML
+    graph_html_portfolio = fig_portfolio.to_html(full_html=False)
+
     # Render the HTML template with the orders data
-    return render_template('dashboard.html', orders=orders_data,positions=positions_data)
+    return render_template('dashboard.html', orders=orders_data,positions=positions_data, graph_html_portfolio=graph_html_portfolio)
