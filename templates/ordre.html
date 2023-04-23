@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <title>Document</title>
+    <title>Lancer le bot</title>
 </head>
 <body>
     <!-- NavBar -->
@@ -30,26 +30,6 @@
         </div>
       </div>
     </nav>
-    
-    
-        <div class="flex flex-col items-center justify-center py-8 px-4">
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">Résultat du backtest:</h1>
-            <img src="{{ url_for('static', filename='backtest.png') }}" alt="Graphique" class="mb-4">
-            <div class=" justify-center w-full">
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">ET</p>
-                <p class="text-3xl font-bold text-gray-800">{{ et }}</p>
-              </div>
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">BT</p>
-                <p class="text-3xl font-bold text-gray-800">{{ bt }}</p>
-              </div>
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">Total bénéfice</p>
-                <p class="text-3xl font-bold text-gray-800">{{ benefmax }}</p>
-              </div>
-            </div>
-          </div>
-    
+      
 </body>
 </html>

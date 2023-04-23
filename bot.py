@@ -81,6 +81,7 @@ def test_cointeg(tick1, tick2, interval, size):
     for key, value in adf_test2[4].items():
         print("\t%s: %.3f" % (key, value))
 
-    plt.savefig('static/graphique.png')
+    
+
     return full_df, cointeg
 

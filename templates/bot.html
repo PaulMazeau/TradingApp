@@ -9,27 +9,27 @@
     <title>BackTest</title>
 </head>
 <body>
-    <!-- NavBar -->
-    <nav class="bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16">
-            <div class="flex items-center">
-              <div class="flex-shrink-0">
-                <a href="{{ url_for('index') }}" class="text-white text-xl font-bold">TradingBot</a>
-              </div>
-              <div class="hidden md:block">
-                <div class="ml-10 flex items-baseline space-x-4">
-                  <a href="{{ url_for('dashboard') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                  <a href="{{ url_for('bot') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stratégie</a>
-                  <a href="{{ url_for('set_backtest') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Backtest</a>
-                  <a href="{{ url_for('profil') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon profil</a>
-                </div>
-              </div>
+   <!-- NavBar -->
+   <nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <a href="{{ url_for('index') }}" class="text-white text-xl font-bold">TradingBot</a>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a href="{{ url_for('dashboard') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+              <a href="{{ url_for('ordre') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Bot</a>
+              <a href="{{ url_for('bot') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stratégie</a>
+              <a href="{{ url_for('set_backtest') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Backtest</a>
+              <a href="{{ url_for('profil') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mon profil</a>
             </div>
           </div>
         </div>
-      </nav>
-
+      </div>
+    </div>
+  </nav>
       <h3 class="m-4 text-3xl font-medium leading-none tracking-tight text-gray-900 dark:text-white">La stratégie</h3>
       <form action="{{ url_for('result') }}" method="post" class="p-6">
           <div class="mb-4">

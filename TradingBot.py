@@ -25,6 +25,12 @@ def profil():
     # If method not post so display HTML template
     return render_template('profil.html')
 
+@app.route('/ordre')
+def ordre():
+    
+    # If method not post so display HTML template
+    return render_template('ordre.html')
+
 @app.route('/backtest', methods=['GET', 'POST'])
 def set_backtest():
     return render_template('backtest.html')
