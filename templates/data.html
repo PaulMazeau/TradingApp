@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <title>Data</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
    <!-- Burger Button Responsive -->
 <button data-drawer-target="cta-button-sidebar" data-drawer-toggle="cta-button-sidebar" aria-controls="cta-button-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
    <span class="sr-only">Open sidebar</span>
@@ -77,26 +74,9 @@
  </aside>
 
 <div class="p-4 sm:ml-64">
+  
     
-    
-        <div class="flex flex-col items-center justify-center py-8 px-4">
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">Résultat du backtest:</h1>
-            <img src="{{ url_for('static', filename='backtest.png') }}" alt="Graphique" class="mb-4">
-            <div class=" justify-center w-full">
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">ET</p>
-                <p class="text-3xl font-bold text-gray-800">{{ et }}</p>
-              </div>
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">BT</p>
-                <p class="text-3xl font-bold text-gray-800">{{ bt }}</p>
-              </div>
-              <div class="bg-white shadow rounded-lg p-6 m-4">
-                <p class="text-lg font-bold text-gray-800 mb-2">Total bénéfice</p>
-                <p class="text-3xl font-bold text-gray-800">{{ benefmax }}</p>
-              </div>
-            </div>
-          </div>
+  
 </div>
-</body>
+  </body>
 </html>

@@ -3,13 +3,16 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
 
-api = tradeapi.REST('PKMPY03941SVWYJA1MHF', 'h1v7bSV7p5HSaRruYRJFZSUBJ8IQg3rgweqbNmQC', 'https://paper-api.alpaca.markets')
-trading_client = TradingClient('PKMPY03941SVWYJA1MHF', 'h1v7bSV7p5HSaRruYRJFZSUBJ8IQg3rgweqbNmQC', paper=True)
+api = tradeapi.REST('PKDO7AS76AVP98TH2VHN', 'kUFaGiITTNBIAeHilNNcUpVaCNffHfTzgktV3Mcd', 'https://paper-api.alpaca.markets')
+trading_client = TradingClient('PKDO7AS76AVP98TH2VHN', 'kUFaGiITTNBIAeHilNNcUpVaCNffHfTzgktV3Mcd', paper=True)
+
+# Get our account information.
+account = trading_client.get_account()
 
 def get_closed_orders(api):
     # Get the last 100 closed orders
     closed_orders = api.list_orders(
-        status='closed',
+        status='all',
         limit=100,
         nested=True  # show nested multi-leg orders
     )

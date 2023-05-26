@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from bot import test_cointeg
 from backtest import backtest
 import matplotlib
-from broker import get_closed_orders, api
+from broker import get_closed_orders, api, account
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt 
 import numpy as np
@@ -15,9 +15,42 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    fond_total = account.equity
+    fond_dispo = account.buying_power
+    PnL = float(account.cash) - float(account.equity)
 
+    orders_data = get_closed_orders(api)
+
+    # Get the portfolio
+    portfolio = api.list_positions()
+
+    # Extract the relevant information from each position
+    positions_data = []
+    for position in portfolio:
+        data = {
+            'symbol': position.symbol,
+            'qty': position.qty,
+            'market_value': position.market_value,
+            'average_entry_price': position.avg_entry_price,
+            'unrealized_pl': position.unrealized_pl,
+            'unrealized_plpc': position.unrealized_plpc,
+            'current_price': position.current_price,
+            'lastday_price': position.lastday_price,
+            'change_today': position.change_today,
+        }
+        positions_data.append(data)
+
+
+    # Créer un dictionnaire pour compter le nombre de positions pour chaque symbole
+    symbols_counts = {}
+    for position in portfolio:
+        symbol = position.symbol
+        if symbol in symbols_counts:
+            symbols_counts[symbol] += 1
+        else:
+            symbols_counts[symbol] = 1
     # If method not post so display HTML template
-    return render_template('index.html')
+    return render_template('index.html', orders=orders_data,positions=positions_data, fond_dispo=fond_dispo, fond_total=fond_total, PnL=PnL)
 
 @app.route('/profil', methods=['GET', 'POST'])
 def profil():
@@ -91,8 +124,8 @@ def display_backtest_result():
 
 
 # Define route to display the closed orders
-@app.route('/dashboard')
-def dashboard():
+@app.route('/data')
+def data():
     orders_data = get_closed_orders(api)
 
     # Get the portfolio
@@ -146,4 +179,4 @@ def dashboard():
     graph_html_portfolio = fig_portfolio.to_html(full_html=False)
 
     # Render the HTML template with the orders data
-    return render_template('dashboard.html', orders=orders_data,positions=positions_data, graph_html_portfolio=graph_html_portfolio)
+    return render_template('data.html', orders=orders_data,positions=positions_data, graph_html_portfolio=graph_html_portfolio)
