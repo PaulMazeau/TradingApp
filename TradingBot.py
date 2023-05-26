@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from bot import test_cointeg
-from backtest import backtest
+from backtest import Backtest
 import matplotlib
 from broker import get_closed_orders, api, account
 matplotlib.use('Agg')
@@ -109,7 +109,7 @@ def display_backtest_result():
     bcksize = int(request.form['bcksize'])
 
     #return the backtest results   
-    df, bnf, et, bt = backtest(bckticket1, bckticket2, bckinterval, bcksize)
+    df, bnf, et, bt = Backtest(bckticket1, bckticket2, bckinterval, bcksize)
     sum_bnf=np.cumsum(bnf)
     print(sum_bnf)
     plt.plot(sum_bnf)
