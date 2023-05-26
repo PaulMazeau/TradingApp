@@ -73,10 +73,26 @@
    </div>
  </aside>
 
-<div class="p-4 sm:ml-64">
-  
-    
-  
+ <div class="p-4 sm:ml-64">
+   <h3 class="m-4 text-3xl font-medium leading-none tracking-tight text-gray-900 dark:text-white"> Exporter de la data</h3>
+   <form action="{{ url_for('data') }}" method="post" class="p-6">
+       <div class="mb-4">
+         <label for="tck1" class="block mb-2 font-bold text-gray-700">What's the stock ?</label>
+         <input type="text" name="tck1" id="tck1" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="AAPL" required="required">
+       </div>
+       <div class="mb-4">
+         <label for="startDate" class="block mb-2 font-bold text-gray-700">What's the start date</label>
+         <input type="date" name="startDate" id="startDate" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="2021/01/01" required="required">
+       </div>
+       <div class="mb-4">
+         <label for="endDate" class="block mb-2 font-bold text-gray-700">What's the end date</label>
+         <input type="date" name="endDate" id="endDate" class="block w-3/5 px-4 py-3 border border-gray-300 rounded-md text-gray-700" placeholder="2023/01/01" required="required">
+       </div>
+       <div class="mt-8">
+         <button type="submit" class="px-4 py-2 text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 text-gray-700">Générer le backtest</button>
+       </div>
+     </form>
+     
 </div>
   </body>
 </html>

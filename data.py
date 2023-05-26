@@ -17,6 +17,9 @@ class GetData:
         for tick in list_tickers:
             yf.pdr_override()
             df = web.get_data_yahoo(tick, start=self.start_date, end=self.end_date, progress=False)
+            # Ajout de la vérification et de la conversion de l'index ici
+            if not isinstance(df.index, pd.DatetimeIndex):
+                df.index = pd.to_datetime(df.index)
             df['ticker'] = tick
             res[tick] = df
 
@@ -31,6 +34,9 @@ class GetData:
         for tick in list_tickers:
             yf.pdr_override()
             df = web.get_data_yahoo(tick, start=self.start_date, end=self.end_date, progress=False)
+            # Ajout de la vérification et de la conversion de l'index ici
+            if not isinstance(df.index, pd.DatetimeIndex):
+                df.index = pd.to_datetime(df.index)
             df['ticker'] = tick
             res[tick] = df
 

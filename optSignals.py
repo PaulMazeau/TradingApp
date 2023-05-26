@@ -12,7 +12,7 @@ from pandas_datareader import data as web
 from backtest import Backtest
 from optPairs import GetOptPair
 from getSpread import GetSpread
-
+from concurrent.futures import ProcessPoolExecutor
 import warnings
 
 from data import GetData
@@ -42,13 +42,19 @@ class OptimizeSignals:
     @staticmethod
     def multi_bay_opti(objective, space_param, nb=1):
         final = pd.DataFrame(
-            columns=['const_coeff', 'const_std', 'roll_vol', 'SCORE'], index=range(nb))
-        for i in range(nb):
+        columns=['const_coeff', 'const_std', 'roll_vol', 'SCORE'], index=range(nb))
+
+        def get_opti(i):
             optim = OptimizeSignals.bayesian_opti(objective, space_param, 50)
             final['const_std'].iloc[i] = optim[0].loc['const_std'][0]
             final['roll_vol'].iloc[i] = optim[0].loc['roll_vol'][0]
             final['const_coeff'].iloc[i] = optim[0].loc['const_coeff'][0]
             final['SCORE'].iloc[i] = optim[1]
+            return final
+
+        with ProcessPoolExecutor() as executor:
+            executor.map(get_opti, range(nb))
+
         return final
 
     @staticmethod
@@ -70,7 +76,7 @@ class OptimizeSignals:
                     val_param1.append(j)
                     val_param2.append(h)
 
-        idx = pnl_res.index(max(pnl_res))
+        idx = np.argmax(pnl_res)
         return pnl_res[idx], val_param0[idx], val_param1[idx], val_param2[idx]
 
 
@@ -81,12 +87,12 @@ if __name__ == '__main__':
     sp500_list = np.array(sp500[0]['Symbol'])
     cac40 = pd.read_html('https://en.wikipedia.org/wiki/CAC_40#Composition')
     cac40_list = np.array(cac40[4]['Ticker'])
-    full_tickers = list(sp500)
+    full_tickers = sp500[0]['Symbol'].tolist()
     start = dt.datetime(2017, 11, 9)
     end = dt.datetime(2023, 5, 22)
     get_data = GetData(start, end)
     data = get_data.dl_close_data(full_tickers, full_tickers)
-
+    print('prout')
     df_nan = pd.DataFrame(data.isnull().sum(), columns=['nb_nan'])
     l_tick_to_del = df_nan.sort_values('nb_nan')[-18:].reset_index()['ticker'].to_list()
     data = data.drop(columns=l_tick_to_del)
@@ -102,6 +108,7 @@ if __name__ == '__main__':
     significance = 0.05
     find_opt_pairs = GetOptPair(significance, df_prices)
     clustered_series = find_opt_pairs.clustering(scaled_data)
+    print('HOIFEHOHEIDPHG')
     opt_pairs = find_opt_pairs.pair_selection(clustered_series)
     print("Number of cointegrated pairs: ", len(opt_pairs))
     print("Pairs with lowest p-value among all the clusters:", opt_pairs)
@@ -111,7 +118,7 @@ if __name__ == '__main__':
         all_pairs.append(opt_pairs[i][1])
     all_pairs = np.unique(all_pairs)
     final_data = data[all_pairs]
-
+    print('caca')
     full_df = final_data.dropna().copy()
     dict_df_res_bay = {}
     dict_mx_bnf_bay = {}
@@ -142,7 +149,7 @@ if __name__ == '__main__':
         dict_mx_bnf_bay[name] = mx_bnf
         dict_bnf_bay[name] = bnf
         dict_full_bnf_bay[name] = df_res['pnl_strat'].values
-
+    print('popo')
     full_return_ptf_bay = pd.DataFrame.from_dict(dict_full_bnf_bay)
     results_df_bay = full_return_ptf_bay / len(full_return_ptf_bay.columns)
     final_res_bay = results_df_bay.sum(axis=1)
@@ -206,7 +213,7 @@ if __name__ == '__main__':
         dict_mx_bnf_bay[name] = mx_bnf
         dict_bnf_bay[name] = bnf
         dict_full_bnf_bay[name] = df_res['pnl_strat'].values
-
+    print('AHHHHH')
     full_return_ptf_bay = pd.DataFrame.from_dict(dict_full_bnf_bay)
     results_df_bay = full_return_ptf_bay / len(full_return_ptf_bay.columns)
     final_res_bay = results_df_bay.sum(axis=1)
