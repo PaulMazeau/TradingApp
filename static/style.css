@@ -1,13 +1,24 @@
 body {
-    background-color: rgb(17 24 39);
-    color: white;
-}
-
-a {
-    text-decoration: none;
-    color: white;
+    margin: 0;
+    padding: 0;
 }
 
 .boutton {
     margin-top: 20px;
+}
+
+.background {
+    background-color:#414246
+}
+
+.elements {
+    background-color: #181818
+}
+
+.text-active {
+    color: #F9FBFC
+}
+
+.text-inactive {
+    color: #827E86,
 }
