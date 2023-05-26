@@ -10,7 +10,7 @@ import alpaca_trade_api as tradeapi
 import plotly.graph_objs as go
 import plotly.express as px
 from exportData import exportData
-from alpaca_trade_api.rest import REST, TimeFrame
+from flask import send_file
 
 app = Flask(__name__)
 
@@ -127,13 +127,19 @@ def display_backtest_result():
 
 @app.route('/data', methods=['GET', 'POST'])
 def data():
-    if request.method == 'POST':
-        tck1 = request.form.get('tck1')
-        startDate = request.form.get('startDate')
-        endDate = request.form.get('endDate')
+    tck1 = request.form.get('tck1')
+    startDate = request.form.get('startDate')
+    endDate = request.form.get('endDate')
 
-        exportData(tck1, startDate, endDate)
+    if tck1 is None or startDate is None or endDate is None:
+        # Return the form page if not all form values are provided
+        return render_template('data.html')
 
-    # Render the HTML template with the orders data
-    return render_template('data.html',)
+    path = exportData(tck1, startDate, endDate)
+    
+    # Send the CSV file as an attachment, causing it to be downloaded rather than displayed
+    return send_file(path, as_attachment=True)
+
+
+
 
